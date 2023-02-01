@@ -30,6 +30,7 @@ struct Artist {
 	}
 };
 
+//hello
 
 int main() {
 	ifstream fin;
