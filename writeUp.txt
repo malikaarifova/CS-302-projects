@@ -1,0 +1,4 @@
+Connor Riley (github: Bamonaboni), Malika Arifova (github: malikaarifova)
+
+g++ -o lib_info lib_info.cpp to compile
+./lib_info Small.txt
