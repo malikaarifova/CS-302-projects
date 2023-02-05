@@ -1,3 +1,8 @@
+/*Connor Riley, Malika Arifova
+* 2/1/2023 
+* Cosc302 Dr.Emrich
+* Project1 lib_info.cpp A music library organizer
+*/
 #include <iostream>
 #include <map>
 #include <string>
@@ -5,6 +10,14 @@
 #include <sstream>
 #include <iterator>
 using namespace std;
+/*To store the data from the music library we used 3 structs, 
+* for songs, albums and artists. Each hold data pertaining to 
+* what they represent, such as the artist/album or song name, 
+* amount of songs for the artist or album and amount of time for 
+* the artist or album. the artist struct holds a map that contains
+* the album struct for the albums by that artist, similarly the album
+* struct has a map of songs on the album. 
+*/
 struct Song {
 	string songTitle, songTime;
 	Song() {};
@@ -47,12 +60,19 @@ int main(int argc, char* argv[])
 	int min, sec, totalSongTime, trackNum;
 	char colon;
 	stringstream ss;
+	//We made a map to take in artists, and iterators for the 3 maps
 	map<string, Artist> artistMap;
 	map<string, Artist>::iterator artistItr;
 	map<string, Album>::iterator albumItr;
 	map<int, Song>::iterator songItr;
+	//The music library is taken in through a file given as a command line argument
 	fin.open(argv[1]);
-
+	/*To read in the data we put getline in a while loop that reads in a line from the file each loop 
+	* and store it as one string variable. Using a stringstream we seperate the line into its corresponding
+	* variables. For the title, name and album we loop through checking for underscores and replacing them with
+	* a white space instead. last we take the time and using an istringstream we convert the analog time into 2 variables
+	* for minutes and seconds to convert to its total time in seconds.
+	*/
 	while (getline(fin, lineData)) {
 		istringstream iss(lineData);
 		iss >> title >> sLength >> name >> album >> genre >> trackNum;
@@ -71,15 +91,18 @@ int main(int argc, char* argv[])
 				album[i] = ' ';
 			}
 		}
-		for (int i = 0; i < genre.length(); i++) {
-			if (genre[i] == '_') {
-				genre[i] = ' ';
-			}
-		}
 		ss << sLength;
 		ss >> min >> colon >> sec;
 		totalSongTime = ((min * 60) + sec);
-
+	/*With the varaibles assigned we can begin to add them into their corresponding maps.
+	* We first see if the artist has already been added into the artist map before by setting
+	* having the artist iterator to finding the artists name. If the iterator has reached the end of the map
+	* that means the artist hasnt been created yet nor any of their albums. We then inserted the artist into the map
+	* with their name being the key value. This creates the artist struct which makes an album map 
+	* for their the artist. we then insert the album into the album map creating the album struct for 
+	* the artist which holds the song map. last we insert the songs into the map using the trackNum
+	* and song name.
+	*/
 		artistItr = artistMap.find(name);
 		//if artist doesnt exist yet
 		if (artistItr == artistMap.end()) {
@@ -94,6 +117,11 @@ int main(int argc, char* argv[])
 			//add song in the song map, key = tracknum, sets the title and the length in analog time min:sec
 			artistMap[name].albumMap[album].songMap.insert(make_pair(trackNum, Song(title, sLength)));
 		}
+		/*If the artist iterator didnt reach the end then the artist already was in the map
+		* meaning we dont need to create the artist. We then use the album iterator to check if
+		* the album album exits. if it doesnt make the album struct and add the song to it. If it does then just
+		* add the song to songMap in the album.
+		*/
 		//if the artist does exist
 		else if (artistItr != artistMap.end()) {
 			//add 1 to artist nSongs, add totalSongTime to artist time;
@@ -105,9 +133,6 @@ int main(int argc, char* argv[])
 				artistItr->second.albumMap.insert(make_pair(album, Album(album)));
 				artistItr->second.albumMap[album].albumTime += totalSongTime;
 
-				//songItr = artistItr->second.albumMap[album].songMap.find(trackNum);
-				//if song doesnt exist
-				//may need to be if statement but i doubt
 				artistItr->second.albumMap[album].songMap.insert(make_pair(trackNum, Song(title, sLength)));
 
 			}
@@ -123,6 +148,9 @@ int main(int argc, char* argv[])
 		iss.clear();
 		ss.clear();
 	}
+	/*To print we used a for loop to iterator through the artist map, then 2 inner for loops for the album and song maps. 
+	* We converted the total time of the artist and album back to analog time.
+	*/
 	for (artistItr = artistMap.begin(); artistItr != artistMap.end(); artistItr++) {
 		cout << artistItr->second.artistName << ": " << artistItr->second.artistNsongs << ", " << (artistItr->second.artistTime) / 60;
 		if ((artistItr->second.artistTime % 60) >= 10) {
