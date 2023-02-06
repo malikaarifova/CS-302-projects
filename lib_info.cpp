@@ -1,23 +1,24 @@
-/*Connor Riley, Malika Arifova
-* 2/1/2023 
-* Cosc302 Dr.Emrich
-* Project1 lib_info.cpp A music library organizer
+/* Connor Riley, Malika Arifova
+2/1/2023 
+Cosc302 
+Dr.Emrich
+Project1 lib_info.cpp A music library organizer
+
+* Project 1 is about storing data from the music library, so it basically 
+prints out all of MP3 files. For each artist the program will print out the artist name,
+then the number of songs that have that artist's name, and then the total time of all 
+songs that have that artist's name.
 */
+
 #include <iostream>
 #include <map>
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <iterator>
+
 using namespace std;
-/*To store the data from the music library we used 3 structs, 
-* for songs, albums and artists. Each hold data pertaining to 
-* what they represent, such as the artist/album or song name, 
-* amount of songs for the artist or album and amount of time for 
-* the artist or album. the artist struct holds a map that contains
-* the album struct for the albums by that artist, similarly the album
-* struct has a map of songs on the album. 
-*/
+
 struct Song {
 	string songTitle, songTime;
 	Song() {};
@@ -52,7 +53,13 @@ struct Artist {
 		artistNsongs = 1;
 		artistTime = 0;
 	}
-};
+}; // Here above we ended up using 3
+//structs for songs, albums, and artists. Each of them hold data pertaining to 
+//what they represent, like the artist/album or song name, amount of songs for the 
+//artist or album and amount of time for the artist or album. The artist struct holds
+//a map that contains the album struct for the albums by that artist, similarly the 
+//album struct has a map of songs on the album.
+
 int main(int argc, char* argv[])
 {
 	ifstream fin;
@@ -60,18 +67,21 @@ int main(int argc, char* argv[])
 	int min, sec, totalSongTime, trackNum;
 	char colon;
 	stringstream ss;
+	
 	//We made a map to take in artists, and iterators for the 3 maps
+	
 	map<string, Artist> artistMap;
 	map<string, Artist>::iterator artistItr;
 	map<string, Album>::iterator albumItr;
 	map<int, Song>::iterator songItr;
 	//The music library is taken in through a file given as a command line argument
 	fin.open(argv[1]);
-	/*To read in the data we put getline in a while loop that reads in a line from the file each loop 
-	* and store it as one string variable. Using a stringstream we seperate the line into its corresponding
-	* variables. For the title, name and album we loop through checking for underscores and replacing them with
-	* a white space instead. last we take the time and using an istringstream we convert the analog time into 2 variables
-	* for minutes and seconds to convert to its total time in seconds.
+	
+	/* Here below we read in the data we put getline in a while loop that reads in a line from the file in each loop 
+	and store it as one string variable. Using a stringstream we seperate the line into its corresponding
+	variables. For the title, name and album we loop through checking for underscores and replacing them with
+	a white space instead. last we take the time and using an istringstream we convert the analog time into 2 variables
+	for minutes and seconds to convert to its total time in seconds.
 	*/
 	while (getline(fin, lineData)) {
 		istringstream iss(lineData);
@@ -94,7 +104,7 @@ int main(int argc, char* argv[])
 		ss << sLength;
 		ss >> min >> colon >> sec;
 		totalSongTime = ((min * 60) + sec);
-	/*With the varaibles assigned we can begin to add them into their corresponding maps.
+	/* Here we have assigned variables and we can begin to add them into their corresponding maps.
 	* We first see if the artist has already been added into the artist map before by setting
 	* having the artist iterator to finding the artists name. If the iterator has reached the end of the map
 	* that means the artist hasnt been created yet nor any of their albums. We then inserted the artist into the map
@@ -148,7 +158,7 @@ int main(int argc, char* argv[])
 		iss.clear();
 		ss.clear();
 	}
-	/*To print we used a for loop to iterator through the artist map, then 2 inner for loops for the album and song maps. 
+	/* Here below, we used a for loop to print to iterator through the artist map, then 2 inner for loops for the album and song maps. 
 	* We converted the total time of the artist and album back to analog time.
 	*/
 	for (artistItr = artistMap.begin(); artistItr != artistMap.end(); artistItr++) {
