@@ -7,7 +7,8 @@ https://github.com/malikaarifova/CS-302-projects
 g++ -o lib_info lib_info.cpp to compile
 ./lib_info Small.txt
 
-Summary - We both contributed a fair amount to the best of our abilities. We usually met up in person at the library and worked on the project. We had several problems with setting up the github, and we were able to get the TAs to help us out during our separate lab times. It was a little hard dividing up the work because this we weren't sure of what to do at first. However, we were able to figure it out after drawing out an outline and following the writeup.
-
-
-a few sentences, one paragraph is fine, of what you and your partner each contributed to the project, and how you worked as a team to complete the project (github workflow, dividing up work between you, etc.). Keep this short and sweet because we will read ~130 of these :)
+Summary - We both contributed a fair amount to the best of our abilities. We usually met up in person at the library and worked on the project 
+simultaneously. We had several problems with setting up the github at first, but we were able to get the TAs to help us out during our separate 
+lab times. It was a little hard dividing up the work because this we weren't sure of what to do at first. However, we were able to figure it 
+out after drawing out an outline and following the writeup. We divided up the different steps and the comments on the project. 
+We worked pretty well together on the project but we definitely need improvements on our teamwork skills. 
